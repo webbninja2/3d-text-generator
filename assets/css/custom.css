@@ -1,0 +1,19 @@
+div#box {text-align: center;}
+.color-box {display: inline-block;width: 45px;height: 45px;padding: 10px;cursor: pointer;border: 1px solid grey;margin: 0px 15px 0px 0px;}
+.boxLaoyut {padding: 30px;border: 10px solid #337ab7;border-radius: 5px;}
+.generatorOptions {border: solid 1px #c1c1c1;padding: 15px;border-radius: 5px;margin-bottom: 20px;}
+#generateCodeButton {margin-top: 20px;border: solid 1px #c1c1c1;padding: 15px;border-radius: 5px;background-color: #f0f0f0;}
+button#generateCodeButton img {margin-top: -3px;}
+.row.options label {font-weight: 700;}
+input#manualTextColor {width: 100px;height: 45px;}
+input#manualTextShadowColor {width: 100px;height: 45px;}
+input#textShadowColor {width: 45px;height: 45px;padding: 12px;}
+input#textColor {width: 45px;height: 45px;padding: 12px;}
+input#dummyText {padding: 10px;}
+select#fontFamilySelect {width: 80%;border: 1px solid grey;border-radius: unset;padding: 10px;}
+.generated-code-container h5 {font-size: 16px;width: 100%;color: #fff;background-color: #337ab7;margin-bottom: 0px;padding: 0 10px;font-weight: bold;line-height: 36px;margin-top: 20px;}
+.bold-italic-options div {display: inline-block;padding: 10px;color: #333;text-align: center;cursor: pointer;border: 1px solid grey;width: 40px;}
+.bold-italic-option.active {background-color: #C5C5C5;box-shadow: inset 0 2px 4px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.05);}
+.GlobalOptions {border: solid 1px #c1c1c1;padding: 15px;border-radius: 5px;margin-top: 20px;margin-bottom: 20px;}
+.generatorOptions label {font-weight: 700;}
+h5.txtOpt {color: #337ab7;font-weight: 700;font-size: 17px;}
