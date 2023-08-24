@@ -1,0 +1,372 @@
+<!DOCTYPE html>  
+<html>  
+    <head>  
+        <title>3D Text Generator</title>  
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            div#box {text-align: center;}
+            .color-box {display: inline-block;width: 45px;height: 45px;padding: 10px;cursor: pointer;border: 1px solid grey;margin: 0px 15px 0px 0px;}
+            .boxLaoyut {padding: 30px;border: 10px solid #337ab7;border-radius: 5px;}
+            .generatorOptions {border: solid 1px #c1c1c1;padding: 15px;border-radius: 5px;margin-bottom: 20px;}
+            #generateCodeButton {margin-top: 20px;border: solid 1px #c1c1c1;padding: 15px;border-radius: 5px;background-color: #f0f0f0;}
+            button#generateCodeButton img {margin-top: -3px;}
+            .row.options label {font-weight: 700;}
+            input#manualTextColor {width: 100px;height: 45px;}
+            input#manualTextShadowColor {width: 100px;height: 45px;}
+            input#textShadowColor {width: 45px;height: 45px;padding: 12px;}
+            input#textColor {width: 45px;height: 45px;padding: 12px;}
+            input#dummyText {padding: 10px;}
+            select#fontFamilySelect {width: 80%;border: 1px solid grey;border-radius: unset;padding: 10px;}
+            /* div#sampleText {font-size: 70px;text-shadow: rgb(52, 122, 183) 2px 2px;height: 200px;margin: 20px auto;display: flex;align-items: center;justify-content: center;} */
+            .generated-code-container h5 {font-size: 16px;width: 100%;color: #fff;background-color: #337ab7;margin-bottom: 0px;padding: 0 10px;font-weight: bold;line-height: 36px;margin-top: 20px;}
+            .bold-italic-options div {display: inline-block;padding: 10px;color: #333;text-align: center;cursor: pointer;border: 1px solid grey;width: 40px;}
+            .bold-italic-option.active {background-color: #C5C5C5;box-shadow: inset 0 2px 4px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.05);}
+            .GlobalOptions {border: solid 1px #c1c1c1;padding: 15px;border-radius: 5px;margin-top: 20px;margin-bottom: 20px;}
+            .generatorOptions label {font-weight: 700;}
+            h5.txtOpt {color: #337ab7;font-weight: 700;font-size: 17px;}
+        </style>
+    </head>  
+    
+    <body>  
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-8 form-generator">
+                    <div class="GlobalOptions">
+                        <div class="row options">
+                            <div class="col-md-6">
+                                <div class="text-content" id="textContent">
+                                    <label>Enter Text:</label><br>
+                                    <input type="text" id="dummyText" placeholder="3D TEXT" maxlength="25">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="background-colors">
+                                    <label>Select Background Color:</label><br>
+                                    <div class="color-box" id="whiteBox" style="background-color: white"></div>
+                                    <div class="color-box" id="blackBox" style="background-color: black"></div>
+                                    <div class="color-box" id="imageBackground" style="background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAC1JREFUeNpiPHPmDAM2YGxsjFWciYFEMKqBGMD4//9/rBJnz54dDSX6aQAIMABCtQiAsDRF+wAAAABJRU5ErkJggg==');"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row options">
+                            <div class="col-md-6">
+                                <div class="text-colors">
+                                    <label for="textColor">Text Color:</label><br>
+                                    <input type="color" id="textColor" value="#000000">
+                                    <input type="text" id="manualTextColor" placeholder="color code">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-shadow-options">
+                                    <label for="textShadowColor">Text Shadow Color:</label><br>
+                                    <input type="color" id="textShadowColor" value="#337ab7">
+                                    <input type="text" id="manualTextShadowColor" placeholder="color code">
+                                </div>                        
+                            </div>
+                        </div>
+                        <div class="row options">
+                            <div class="col-md-6">
+                                <div class="bold-italic-options">
+                                    <label for="fontFamilySelect">Font Style:</label><br>
+                                    <div class="bold-italic-option" id="boldOption">B</div>
+                                    <div class="bold-italic-option italic" id="italicOption">I</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="font-family-dropdown">
+                                    <label for="fontFamilySelect">Font Family:</label><br>
+                                    <select id="fontFamilySelect">
+                                        <option>Select Font Family</option>
+                                        <option value="Arial, sans-serif">Arial</option>
+                                        <option value="Helvetica, sans-serif">Helvetica</option>
+                                        <option value="Times New Roman, serif">Times New Roman</option>
+                                        <option value="Georgia, serif">Georgia</option>
+                                        <option value="Courier New, monospace">Courier New</option>
+                                        <option value="Verdana, sans-serif">Verdana</option>
+                                        <option value="Tahoma, sans-serif">Tahoma</option>
+                                        <option value="Trebuchet MS, sans-serif">Trebuchet MS</option>
+                                        <option value="Roboto, sans-serif">Roboto</option>
+                                        <option value="Open Sans, sans-serif">Open Sans</option>
+                                        <option value="Lato, sans-serif">Lato</option>
+                                        <option value="Montserrat, sans-serif">Montserrat</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="boxLaoyut">
+                        <div class="box" id="box">
+                            <div id="sampleText">3D TEXT</div>
+                        </div>
+                    </div>
+                    <h5 class="txtOpt">3D Text Options:</h5>
+                    <div class="generatorOptions">
+                        <!-- 3D TEXT OPTIONS -->
+                        <div class="size-options">
+                            <div class="text-font">
+                                <label for="fontSize">Font Size:</label>
+                                <input type="range" id="fontSize" min="10" max="100" value="70">
+                                <input type="text" id="fontSizeValue" value="70px" style="width: 80px;">
+                            </div>
+                        </div>
+                        <div class="height-options">
+                            <label for="textHeight">Text Height:</label>
+                            <input type="range" id="textHeight" min="1" max="50" value="10">
+                            <input type="text" id="textHeightValue" value="10" style="width: 60px;">
+                        </div>     
+                        <div class="opacity-options">
+                            <label for="opacity">Opacity:</label>
+                            <input type="range" id="opacity" min="0" max="1" step="0.1" value="0.6">
+                            <input type="text" id="opacityValue" value="0.6" style="width: 60px;">
+                        </div>
+                        <div class="angle-options">
+                            <label for="angle">Angle:</label>
+                            <input type="range" id="angle" min="0" max="360" value="315">
+                            <input type="text" id="angleValue" value="315" style="width: 60px;">
+                        </div>                                                          
+                        <!-- 3D TEXT OPTIONS -->
+                        <button id="generateCodeButton"><img src="assets/images/tools/16x16/tools2.png"> Generate Code</button>
+                    </div>
+                    <!-- <div id="generatedHtmlCode"></div>
+                    <div id="generatedCssCode"></div> -->
+                </div>
+                <div class="cols col_4_of_12">
+                    <h3>Sidebar</h3>
+                </div>
+            </div>
+        </div>
+        <script>
+            // GLOBAL 
+            const dummyTextInput        = document.getElementById('dummyText');
+            const sampleText            = document.getElementById('sampleText');
+            const boxLayout             = document.querySelector('.boxLaoyut');
+            const imageBackground       = document.getElementById('imageBackground');
+            const boldOption            = document.getElementById('boldOption');
+            const italicOption          = document.getElementById('italicOption');
+            const sampleTextStyle       = sampleText.style;
+            const fontFamilySelect      = document.getElementById('fontFamilySelect');
+            const googleFontsIcon       = document.getElementById('googleFontsIcon');
+            const imageUpload           = document.getElementById('imageUpload');
+            const textColorSection      = document.querySelector('.text-colors');
+            const textColor             = document.getElementById('textColor');
+            manualTextColor.value       = textColor.value;
+            const textContent           = document.getElementById('textContent');
+            const textShadowColor       = document.getElementById('textShadowColor');
+            const manualTextShadowColor = document.getElementById('manualTextShadowColor');
+            const textShadowOptions     = document.querySelector('.text-shadow-options');
+            manualTextShadowColor.value = textShadowColor.value;
+            // SIZE
+            const fontSizeInput         = document.getElementById('fontSize');
+            const fontSizeValue         = document.getElementById('fontSizeValue');
+            const sizeOptions           = document.querySelector('.size-options');
+            // HEIGHT
+            const textHeightInput       = document.getElementById('textHeight');
+            const textHeightValue       = document.getElementById('textHeightValue');
+            // ANGLE
+            const angleInput            = document.getElementById('angle');
+            const angleValue            = document.getElementById('angleValue');
+            // OPACITY
+            const opacityInput          = document.getElementById('opacity');
+            const opacityValue          = document.getElementById('opacityValue');
+            // Set initial values
+            textHeightInput.value = 10;
+            textHeightValue.value = 10;
+            opacityInput.value = 1;
+            opacityValue.value = 1;
+            angleInput.value = 45;
+            angleValue.value = 45;
+            updateText(); // Update text with initial values
+            // GLOBAL BOLD STYLE
+            boldOption.addEventListener('click', () => {
+                sampleTextStyle.fontWeight = sampleTextStyle.fontWeight === 'bold' ? 'normal' : 'bold';
+                boldOption.classList.toggle('active');
+            });
+
+            // GLOBAL ITALIC STYLE
+            italicOption.addEventListener('click', () => {
+                sampleTextStyle.fontStyle = sampleTextStyle.fontStyle === 'italic' ? 'normal' : 'italic';
+                italicOption.classList.toggle('active');
+            });
+
+            // GLOBAL FONT FAMILY
+            fontFamilySelect.addEventListener('change', () => {
+                const selectedFont = fontFamilySelect.value;
+                sampleText.style.fontFamily = selectedFont;
+            });
+
+            // GLOBAL BACKGROUND COLOR
+            imageBackground.addEventListener('click', () => {
+                changeBackgroundColor('url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAC1JREFUeNpiPHPmDAM2YGxsjFWciYFEMKqBGMD4//9/rBJnz54dDSX6aQAIMABCtQiAsDRF+wAAAABJRU5ErkJggg==")');
+            });
+
+            function changeBackgroundColor(color) {
+                boxLayout.style.background = color;
+            }
+            whiteBox.addEventListener('click', () => {
+                changeBackgroundColor('white');
+            });
+
+            blackBox.addEventListener('click', () => {
+                changeBackgroundColor('black');
+            });
+
+            // GLOBAL REPLACE DUMMY CONTENT
+            dummyTextInput.addEventListener('input', () => {
+                sampleText.textContent = dummyTextInput.value;
+            });
+
+            // GLOBAL TEXT COLOR CHANGE
+            textColor.addEventListener('input', () => {
+                const colorValue = textColor.value;
+                changeTextColor(colorValue);
+                manualTextColor.value = colorValue;
+            });
+            manualTextColor.addEventListener('input', () => {
+                const colorValue = manualTextColor.value;
+                changeTextColor(colorValue);
+            });
+            function changeTextColor(color) {
+                sampleText.style.color = color;
+            }
+
+            // GLOBAL TEXT SHADOW CHANGE
+            textShadowColor.addEventListener('input', () => {
+                const colorValue = textShadowColor.value;
+                changeTextShadowColor(colorValue);
+                manualTextShadowColor.value = colorValue;
+                updateText();
+            });
+
+            manualTextShadowColor.addEventListener('input', () => {
+                const colorValue = manualTextShadowColor.value;
+                changeTextShadowColor(colorValue);
+                updateText();
+            });
+
+            function changeTextShadowColor(color) {
+                const shadowValue = `2px 2px ${color}`;
+                sampleText.style.textShadow = shadowValue;
+            }
+
+
+            // FONT SIZE
+            fontSizeInput.addEventListener('input', () => {
+                const newSize = fontSizeInput.value + 'px';
+                sampleText.style.fontSize = newSize;
+                fontSizeValue.value = newSize;
+            });
+
+            fontSizeValue.addEventListener('input', () => {
+                const newSize = fontSizeValue.value;
+                sampleText.style.fontSize = newSize;
+                fontSizeInput.value = newSize.replace('px', '');
+            });
+
+            // HEIGHT
+            textHeightInput.addEventListener('input', () => {
+                textHeightValue.value = textHeightInput.value;
+                updateText();
+            });
+            textHeightValue.addEventListener('input', () => {
+                textHeightInput.value = textHeightValue.value;
+                updateText();
+            });
+            // OPACITY
+            opacityInput.addEventListener('input', () => {
+                opacityValue.value = opacityInput.value;
+                updateText();
+            });
+
+            opacityValue.addEventListener('input', () => {
+                opacityInput.value = opacityValue.value;
+                updateText();
+            });
+            // ANGLE
+            angleInput.addEventListener('input', () => {
+                angleValue.value = angleInput.value;
+                updateText();
+            });
+            angleValue.addEventListener('input', () => {
+                angleInput.value = angleValue.value;
+                updateText();
+            });
+
+            // FOR 3D EFFECT METHODS
+
+            function generateTextShadow(height, opacity, angle, shadowColor) 
+            {
+                const offsetX = Math.sin(angle * (Math.PI / 180));
+                const offsetY = Math.cos(angle * (Math.PI / 180));
+                let textShadow = "";
+                for (let i = 0; i <= height; i++) {
+                    const offset = i * 1;
+                    const normalizedOpacity = opacity * (height - i) / height; // Adjusted opacity calculation
+                    textShadow += `${offsetX * offset}px ${offsetY * offset}px ${offset}px rgba(0, 0, 0, ${normalizedOpacity}), `;
+                }
+                return textShadow.slice(0, -2);
+            }
+
+            function updateText() {    
+                sampleText.style.fontSize = fontSizeInput.value + 'px';
+                const selectedTextShadowColor = textShadowColor.value;
+                const textShadow = generateTextShadow(
+                    textHeightInput.value, 
+                    opacityInput.value, 
+                    angleInput.value, 
+                    textShadowColor.value
+                );
+                sampleText.style.textShadow = textShadow;
+            }
+
+            // Generated Code
+            const generateCodeButton = document.getElementById('generateCodeButton');
+            const generatedHtmlContainer = document.createElement('div');
+            generatedHtmlContainer.classList.add('generated-code-container');
+
+            generateCodeButton.addEventListener('click', () => {    
+                // Clear previously generated code
+                while (generatedHtmlContainer.firstChild) {
+                    generatedHtmlContainer.removeChild(generatedHtmlContainer.firstChild);
+                } 
+                const generatedHtml = generateHtml();
+                const generatedCss = generateCss();        
+                const generatedCodeHtmlHeading = document.createElement('h5');
+                generatedCodeHtmlHeading.innerText = 'HTML';
+                generatedHtmlContainer.appendChild(generatedCodeHtmlHeading);
+                const generatedCodeHtml = document.createElement('pre');
+                generatedCodeHtml.innerText = generatedHtml;
+                generatedHtmlContainer.appendChild(generatedCodeHtml);
+                const generatedCodeCssHeading = document.createElement('h5');
+                generatedCodeCssHeading.innerText = 'CSS';
+                generatedHtmlContainer.appendChild(generatedCodeCssHeading);
+                const generatedCodeCss = document.createElement('pre');
+                generatedCodeCss.innerText = generatedCss;
+                generatedHtmlContainer.appendChild(generatedCodeCss);
+                const formGenerator = document.querySelector('.form-generator');
+                formGenerator.appendChild(generatedHtmlContainer);
+            });
+
+            function generateHtml() 
+            { 
+                const textValue = sampleText.textContent || '3D TEXT';
+                return '<div id="sampleText">\n' +
+                        `    <p>${textValue}</p>\n` +
+                        '</div>';
+            }
+
+            function generateCss() 
+            {
+                let css = '';
+                    css += '#sampleText {\n' +
+                    '    font-size: ' + fontSizeInput.value + 'px;\n' +
+                    '    color: ' + textColor.value + ';\n' +
+                    '    text-shadow: ' + sampleText.style.textShadow + ';\n' +
+                    '    /* Add other CSS properties here */\n' +
+                    '}\n';
+                return css;
+            }
+        </script>
+    </body>  
+</html>  
