@@ -31,8 +31,8 @@ const angleValue            = document.getElementById('angleValue');
 const opacityInput          = document.getElementById('opacity');
 const opacityValue          = document.getElementById('opacityValue');
 // Set initial values
-textHeightInput.value = 10;
-textHeightValue.value = 10;
+textHeightInput.value = 15;
+textHeightValue.value = 15;
 opacityInput.value = 1;
 opacityValue.value = 1;
 angleInput.value = 45;
@@ -92,6 +92,7 @@ function changeTextColor(color) {
 }
 
 // GLOBAL TEXT SHADOW CHANGE
+
 textShadowColor.addEventListener('input', () => {
     const colorValue = textShadowColor.value;
     changeTextShadowColor(colorValue);
@@ -102,6 +103,7 @@ textShadowColor.addEventListener('input', () => {
 manualTextShadowColor.addEventListener('input', () => {
     const colorValue = manualTextShadowColor.value;
     changeTextShadowColor(colorValue);
+    textShadowColor.value = colorValue;
     updateText();
 });
 
@@ -155,17 +157,21 @@ angleValue.addEventListener('input', () => {
 
 // FOR 3D EFFECT METHODS
 
-function generateTextShadow(height, opacity, angle, shadowColor) 
-{
+function generateTextShadow(height, opacity, angle, shadowColor) {
+    const colorValue = textShadowColor.value;
+    const rgbColor = hexToRgb(colorValue);
     const offsetX = Math.sin(angle * (Math.PI / 180));
     const offsetY = Math.cos(angle * (Math.PI / 180));
     let textShadow = "";
+
     for (let i = 0; i <= height; i++) {
         const offset = i * 1;
-        const normalizedOpacity = opacity * (height - i) / height; // Adjusted opacity calculation
-        textShadow += `${offsetX * offset}px ${offsetY * offset}px ${offset}px rgba(0, 0, 0, ${normalizedOpacity}), `;
+        const normalizedOpacity = opacity - (i / height);
+        textShadow += `${offsetX * offset}px ${offsetY * offset}px 0px rgba(${rgbColor[0]}, ${rgbColor[1]}, ${rgbColor[2]}, ${normalizedOpacity}), `;
     }
-    return textShadow.slice(0, -2);
+
+    textShadow = textShadow.slice(0, -2);
+    return textShadow;
 }
 
 function updateText() {    
@@ -180,13 +186,22 @@ function updateText() {
     sampleText.style.textShadow = textShadow;
 }
 
+// Function to convert hex color to RGB format
+function hexToRgb(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return [r, g, b];
+}
+
 // Generated Code
 const generateCodeButton = document.getElementById('generateCodeButton');
 const generatedHtmlContainer = document.createElement('div');
 generatedHtmlContainer.classList.add('generated-code-container');
 
 generateCodeButton.addEventListener('click', () => {    
-    // Clear previously generated code
+
     while (generatedHtmlContainer.firstChild) {
         generatedHtmlContainer.removeChild(generatedHtmlContainer.firstChild);
     } 
@@ -221,8 +236,19 @@ function generateCss()
     let css = '';
         css += '#sampleText {\n' +
         '    font-size: ' + fontSizeInput.value + 'px;\n' +
-        '    color: ' + textColor.value + ';\n' +
-        '    text-shadow: ' + sampleText.style.textShadow + ';\n' +
+        '    color: ' + textColor.value + ';\n';
+        if (sampleText.style.fontWeight !== '' && sampleText.style.fontWeight !== 'normal') {
+            css += `    font-weight: ${sampleText.style.fontWeight};\n`;
+        }
+
+        if (sampleText.style.fontStyle === 'italic') {
+            css += '    font-style: italic;\n';
+        }
+
+        if (sampleText.style.fontFamily) {
+            css += `    font-family: ${sampleText.style.fontFamily}, sans-serif;\n`;
+        }
+        css += '    text-shadow: ' + sampleText.style.textShadow + ';\n' +
         '    /* Add other CSS properties here */\n' +
         '}\n';
     return css;
